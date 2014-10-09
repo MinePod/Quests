@@ -66,6 +66,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.codisimus.plugins.phatloots.PhatLoots;
 import com.codisimus.plugins.phatloots.PhatLootsAPI;
+import com.comphenix.protocol.ProtocolManager;
 import com.evilmidget38.UUIDFetcher;
 import com.gmail.nossr50.mcMMO;
 import com.gmail.nossr50.datatypes.player.McMMOPlayer;
@@ -77,6 +78,7 @@ import com.herocraftonline.heroes.characters.classes.HeroClass;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
@@ -91,6 +93,7 @@ import java.util.Enumeration;
 import java.util.UUID;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -129,6 +132,7 @@ public class Quests extends JavaPlugin implements ConversationAbandonedListener,
     public NpcListener npcListener;
     public NpcEffectThread effListener;
     public Denizen denizen = null;
+    public ProtocolManager protocolManager;
     public QuestTaskTrigger trigger;
     public boolean allowCommands = true;
     public boolean allowCommandsForNpcQuests = false;

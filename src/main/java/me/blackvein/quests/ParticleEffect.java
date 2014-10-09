@@ -1,11 +1,10 @@
 package me.blackvein.quests;
 
-import me.blackvein.quests.util.ReflectionUtil;
-import net.minecraft.server.v1_7_R3.PacketPlayOutWorldParticles;
-
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
 
 public enum ParticleEffect {
 
@@ -15,7 +14,7 @@ public enum ParticleEffect {
     BUBBLE("bubble"),
     SUSPEND("susgpend"),
     DEPTH_SUSPEND("depthSuspend"),
-    TOWN_AURA("townaura"),
+    TOWN_AURA("townaura"),	
     CRIT("crit"),
     MAGIC_CRIT("magicCrit"),
     MOB_SPELL("mobSpell"),
@@ -46,23 +45,24 @@ public enum ParticleEffect {
     TILECRACK("tilecrack_");
 
     private final String particleName;
-
+    
     ParticleEffect(String particleName) {
         this.particleName = particleName;
     }
 
-    public void sendToPlayer(Player player, Location location, float offsetX, float offsetY, float offsetZ, float speed, int count) throws Exception {
-        PacketPlayOutWorldParticles packet = new PacketPlayOutWorldParticles();
-        ReflectionUtil.setValue(packet, "a", particleName);
-        ReflectionUtil.setValue(packet, "b", (float) location.getX());
-        ReflectionUtil.setValue(packet, "c", (float) location.getY());
-        ReflectionUtil.setValue(packet, "d", (float) location.getZ());
-        ReflectionUtil.setValue(packet, "e", offsetX);
-        ReflectionUtil.setValue(packet, "f", offsetY);
-        ReflectionUtil.setValue(packet, "g", offsetZ);
-        ReflectionUtil.setValue(packet, "h", speed);
-        ReflectionUtil.setValue(packet, "i", count);
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+    public void sendToPlayer(Quests quests, Player player, Location location, float offsetX, float offsetY, float offsetZ, float speed, int count) throws Exception {
+    	
+    	PacketContainer container = new PacketContainer(PacketType.Play.Server.WORLD_PARTICLES);
+    	container.getStrings().write(0, particleName);
+    	container.getFloat().write(0, (float) location.getX());
+    	container.getFloat().write(1, (float) location.getY());
+    	container.getFloat().write(2, (float) location.getZ());
+    	container.getFloat().write(3, offsetX);
+    	container.getFloat().write(4, offsetY);
+    	container.getFloat().write(5, offsetZ);
+    	container.getFloat().write(6, speed);
+    	container.getIntegers().write(0, count);
+        quests.protocolManager.sendServerPacket(player, container);
     }
 
 }
