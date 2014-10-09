@@ -66,6 +66,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.codisimus.plugins.phatloots.PhatLoots;
 import com.codisimus.plugins.phatloots.PhatLootsAPI;
+import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.evilmidget38.UUIDFetcher;
 import com.gmail.nossr50.mcMMO;
@@ -443,6 +444,7 @@ public class Quests extends JavaPlugin implements ConversationAbandonedListener,
         }
 
         vault = (Vault) getServer().getPluginManager().getPlugin("Vault");
+        protocolManager = ProtocolLibrary.getProtocolManager();
     }
 
     @Override
